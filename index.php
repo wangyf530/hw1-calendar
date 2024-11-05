@@ -79,15 +79,15 @@
     <table style="width:100%;">
         <tr>
             <td style='text-align:left'>
-                <a href="calendar.php?year=<?=$year-1;?>&month=<?=$month;?>"> 去年 </a>
-                <a href="calendar.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>"> 上一個月 </a>
+                <a href="index.php?year=<?=$year-1;?>&month=<?=$month;?>"> 去年 </a>
+                <a href="index.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>"> 上一個月 </a>
             </td>
             <td>
             <?=date('Y年-m月',$firstDayTime);?>
             </td>
             <td style='text-align:right'>
-                <a href="calendar.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>"> 下一個月 </a>
-                <a href="calendar.php?year=<?=$year+1;?>&month=<?=$month;?>"> 明年 </a>
+                <a href="index.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>"> 下一個月 </a>
+                <a href="index.php?year=<?=$year+1;?>&month=<?=$month;?>"> 明年 </a>
             </td>
         </tr>
 </table>
@@ -100,7 +100,7 @@
 <?php
     
     // 印週幾
-    $day=[' ','日','一','二','三','四','五','六'];
+    $day=['日','一','二','三','四','五','六'];
     echo "<tr>";
     foreach ($day as $key) {
         if ($key=='日' || $key =='六'){
@@ -115,10 +115,6 @@
     // 印日期 
     for ($i=0; $i<6; $i++) { 
         echo "<tr>";
-        // 印第幾周
-        echo "<td class='days'>";
-        echo $i+1;
-        echo "</td>";
 
         for ($j=0; $j<7; $j++) { 
             // 幾號 當月第一天會是0
@@ -139,7 +135,7 @@
             // 如果今天的日期有人生日 key
             // 印xxx生日 value
             if (isset($twice[date('m-d',$theDayTime)])) {
-                echo "<br>{$twice[date("m-d",$theDayTime)]}";
+                echo "<br class='birth'>{$twice[date("m-d",$theDayTime)]}";
             }
             if (isset($bnd[date('m-d',$theDayTime)])) {
                 echo "<br>{$bnd[date("m-d",$theDayTime)]}";
@@ -152,8 +148,8 @@
 
 ?>
 </table>
-<div style="text-align:center; padding-top:5px;">
-<a href="calendar.php?year=<?=date("Y");?>&month=<?=date('m');?>"> 今天 </a>
+<div>
+<a class="goToday" href="index.php?year=<?=date("Y");?>&month=<?=date('m');?>"> 今天 </a>
 </div>
 </body>
 </html>

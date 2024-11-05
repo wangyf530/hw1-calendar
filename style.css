@@ -37,7 +37,7 @@ td:hover{
     font-size:18px;
     margin: auto;
     text-align: center;
-    width:823px;
+    width:623px;
     background: lightgrey;
     border-bottom:none;
 
@@ -46,4 +46,14 @@ td:hover{
 a:hover{
     background:black;
     color:white;
+}
+
+.birth{
+    color:black;
+}
+
+a.goToday{
+    text-align:center; 
+    padding-top:5px;
+    margin: auto;
 }
