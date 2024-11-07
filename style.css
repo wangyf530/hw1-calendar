@@ -1,3 +1,8 @@
+*{
+    box-sizing: border-box;
+    margin: auto;
+}
+
 table {
     border-collapse:collapse;
     margin:auto;
@@ -7,6 +12,7 @@ td{
     text-align: center;
     border:1px solid #999;
     width: 100px;
+    height: 50px;
 }
 
 td:hover{
@@ -14,7 +20,7 @@ td:hover{
 }
 
 .days{
-    height:50px;
+    height:500px;
 }
 
 .holiday{
@@ -38,6 +44,7 @@ td:hover{
     margin: auto;
     text-align: center;
     width:623px;
+    height: 200px;
     background: lightgrey;
     border-bottom:none;
 
@@ -52,8 +59,16 @@ a:hover{
     color:black;
 }
 
-a.goToday{
-    text-align:center; 
-    padding-top:5px;
-    margin: auto;
+div.goToday{
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center; /* 垂直居中 */
+    height: 100px; /* 設定高度讓垂直居中有效 */
+}
+.goToday a {
+    text-decoration: none; /* 去掉下劃線 */
+    padding: 10px 20px; /* 添加內邊距讓按鈕更大 */
+    background-color: #4CAF50; /* 綠色背景 */
+    color: white; /* 白色文字 */
+    border-radius: 5px; /* 圓角 */
 }

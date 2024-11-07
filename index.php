@@ -42,11 +42,14 @@
         $nextMonth = $month +1;
         $nextYear = $year;
     }
+
+    
 ?>
-<!-- 生日表 -->
-<?php 
-    include("common/navbar.php"); 
+    <!-- 生日表 -->
+<?php
+    include "birthday.php"; 
 ?>
+
 <?php
     // 當月第一天
     $firstInMonth = "$year-$month-1";
@@ -57,7 +60,7 @@
 ?>
 <div class='nav'>
     <!-- 連結前往去年、上一個月、今天、下一個月、以及明年 -->
-    <table style="width:100%;">
+    <table>
         <tr>
             <td style='text-align:left'>
                 <a href="index.php?year=<?=$year-1;?>&month=<?=$month;?>"> 去年 </a>
@@ -71,7 +74,7 @@
                 <a href="index.php?year=<?=$year+1;?>&month=<?=$month;?>"> 明年 </a>
             </td>
         </tr>
-</table>
+    </table>
 </div>
 
 
@@ -129,8 +132,10 @@
 
 ?>
 </table>
-<div>
-<a class="goToday" href="index.php?year=<?=date("Y");?>&month=<?=date('m');?>"> 今天 </a>
+
+<div class="goToday">
+<a href="index.php?year=<?=date('Y');?>&month=<?=date('m');?>"> 今天 </a>
 </div>
+
 </body>
 </html>
