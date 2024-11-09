@@ -43,14 +43,6 @@
         $nextYear = $year;
     }
 
-    
-?>
-    <!-- 生日表 -->
-<?php
-    include "birthday.php"; 
-?>
-
-<?php
     // 當月第一天
     $firstInMonth = "$year-$month-1";
     $firstDayTime = strtotime($firstInMonth);
@@ -58,71 +50,87 @@
     $firstDayWeek= date("w",$firstDayTime);
     // $firstDayWeek = date("w",strtotime(date("Y-m-1")));
 ?>
+
+<!-- 連結前往去年、上一個月、今天、下一個月、以及明年 -->
 <div class='nav'>
-    <!-- 連結前往去年、上一個月、今天、下一個月、以及明年 -->
-    <table>
+    <table class='navBar'>
         <tr>
-            <td style='text-align:left'>
-                <a href="index.php?year=<?=$year-1;?>&month=<?=$month;?>"> 去年 </a>
-                <a href="index.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>"> 上一個月 </a>
+            <!-- 去年 -->
+            <td class='beforeBar'>
+                <a href="index.php?year=<?=$year-1;?>&month=<?=$month;?>"> << </a>
             </td>
-            <td>
-            <?=date('Y年-m月',$firstDayTime);?>
+            <!-- 今年（看之後能否改成可直接跳往至定年月） -->
+            <td class='currentYear'>
+            <?=date('Y年',$firstDayTime);?>
             </td>
-            <td style='text-align:right'>
-                <a href="index.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>"> 下一個月 </a>
-                <a href="index.php?year=<?=$year+1;?>&month=<?=$month;?>"> 明年 </a>
+
+            <!-- 明年 -->
+            <td class='afterBar'>
+                <a href="index.php?year=<?=$year+1;?>&month=<?=$month;?>"> >> </a>
+            </td>
+        </tr>
+        <tr>
+            <!-- 上一個月 -->
+            <td class='beforeBar'>
+                <a href="index.php?year=<?=$prevYear;?>&month=<?=$prevMonth;?>"> < </a>
+            </td>
+            <!-- 這個月 -->
+            <td class='currentMonth'>
+                <?=date('F',$firstDayTime);?>
+            </td>
+            <!-- 下一個月 -->
+            <td class='afterBar'>
+                <a href="index.php?year=<?=$nextYear;?>&month=<?=$nextMonth;?>"> > </a>
             </td>
         </tr>
     </table>
 </div>
 
 
-
 <!-- 萬年曆的表格 -->
-<table>
+<table class='calendar'>
 <?php
-    
+    // 引入生日表
+    include "birthday.php";
+
     // 印週幾
     $day=['日','一','二','三','四','五','六'];
     echo "<tr>";
     foreach ($day as $key) {
-        if ($key=='日' || $key =='六'){
-            echo "<td class='holiday'> $key </td>";
-        } else {
         echo "<td> $key </td>";
-        }
     }
     echo "</tr>";
-
 
     // 印日期 
     for ($i=0; $i<6; $i++) { 
         echo "<tr>";
 
         for ($j=0; $j<7; $j++) { 
-            // 幾號 當月第一天會是0
+            // 判斷當月第一天在星期幾
             $cell = $i*7 + $j - $firstDayWeek;
             // 當月第一天的日期
             $theDayTime = strtotime("$cell days".$firstInMonth);
 
-            // 不是當月的話字會變灰
-            $theMonth = (date("m",$theDayTime) == date("m",$firstDayTime))?'':'grey-text';
-            // 是今天的話就高亮
+            // 判斷這個日期是否在當月
+            $theMonth = (date("m",$theDayTime) == date("m",$firstDayTime))?'':'notCurrentMonth';
+            // 判斷這個日期是否是今天
             $isToday = (date("Y-m-d",$theDayTime) == date("Y-m-d"))?'today':'';
-            // 判斷當天是否是週末
+            // 判斷這個日期是否是週末
             $w = date("w",$theDayTime);
             $isHoliday = ($w==6 || $w==0)?'holiday':'';
-            echo "<td class = '$theMonth $isToday $isHoliday'>";
+
+            // 根據上面的條件去判斷是否需要使用特定css
+            echo "<td class = 'date $theMonth $isToday $isHoliday'>";
+            // 印日期
             echo date('d',$theDayTime);
 
-            // 如果今天的日期有人生日 key
-            // 印xxx生日 value
+            // 如果今天的日期有人生日 印xxx生日
+            // 之後看能否用foreach這樣有更改就不用再跑這裡改code
             if (isset($twice[date('m-d',$theDayTime)])) {
                 echo "<br class='birth'>{$twice[date("m-d",$theDayTime)]}";
             }
             if (isset($bnd[date('m-d',$theDayTime)])) {
-                echo "<br>{$bnd[date("m-d",$theDayTime)]}";
+                echo "<br class='birth'> {$bnd[date("m-d",$theDayTime)]}";
             }
             
             echo "</td>";
@@ -133,6 +141,7 @@
 ?>
 </table>
 
+<!-- 在表格下面加一個前往今日的連結鍵 -->
 <div class="goToday">
 <a href="index.php?year=<?=date('Y');?>&month=<?=date('m');?>"> 今天 </a>
 </div>
