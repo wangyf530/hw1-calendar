@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>萬年曆作業</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="groupstyle.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     
 </head>
 
@@ -61,7 +66,7 @@
             </td>
             <!-- 今年（看之後能否改成可直接跳往至定年月） -->
             <td class='currentYear'>
-            <?=date('Y年',$firstDayTime);?>
+            <?=date('Y',$firstDayTime);?>
             </td>
 
             <!-- 明年 -->
@@ -124,13 +129,18 @@
             // 印日期
             echo date('d',$theDayTime);
 
-            // 如果今天的日期有人生日 印xxx生日
-            // 之後看能否用foreach這樣有更改就不用再跑這裡改code
-            if (isset($twice[date('m-d',$theDayTime)])) {
-                echo "<br class='birth'>{$twice[date("m-d",$theDayTime)]}";
-            }
-            if (isset($bnd[date('m-d',$theDayTime)])) {
-                echo "<br class='birth'> {$bnd[date("m-d",$theDayTime)]}";
+            foreach ($groups as $group => $members) {
+                foreach ($members as $birthInfo) {
+                    foreach ($birthInfo as $birthDate => $birthResult) {
+                        // 檢查今天是否是這個日期
+                        if ($birthDate == date('m-d', $theDayTime)) {
+                            echo "<span class='$group'>";
+                            echo "<br>{$birthResult}";
+                            echo "</span>"; 
+                        }
+                    }
+                    
+                }
             }
             
             echo "</td>";

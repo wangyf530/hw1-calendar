@@ -1,0 +1,10 @@
+/* twice的應援色 */
+.twice{
+    color: #FF5Fa2;
+    text-shadow: 1px 1px rgba(0, 0, 0,0.5);
+}
+/* boynextdoor的應援棒顏色 */
+.bnd{
+    text-shadow: 1px 1px rgba(0, 0, 0,0.5);
+    color: deepskyblue;
+}
